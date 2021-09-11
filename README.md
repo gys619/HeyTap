@@ -52,9 +52,9 @@ vi config.py
 ```json
 accounts = [
     {
-        'user':'',  # 备注
-        'CK':'',    # 账号环境变量 Cookie
-        'UA':''     # 用户环境变量 User-Agent
+        'user' : '',    # 备注
+        'CK' : '',      # 账号环境变量 Cookie
+        'UA' : ''       # 用户环境变量 User-Agent
     }
 ]
 ```
