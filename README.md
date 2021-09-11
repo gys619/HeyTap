@@ -31,6 +31,11 @@
 * [ ] 早起打卡(积分暂时不够，暂搁置)
 * [ ] 发信功能(太懒了，下次再写)
 
+## 文件说明
+- HeyTap.py         欢太商城一键脚本
+- timingCash.py     欢太定时红包，建议配合Linux定时系统Crontab
+- config.py         账号信息
+
 ## Windows
 略
 
