@@ -32,9 +32,10 @@
 * [ ] 发信功能(太懒了，下次再写)
 
 ## 文件说明
-- HeyTap.py         欢太商城一键脚本
-- timingCash.py     欢太定时红包，建议配合Linux定时系统Crontab
-- config.py         账号信息
+- HeyTap.py         # 欢太商城一键脚本
+- timingCash.py     # 欢太定时红包，建议配合Linux定时系统Crontab
+- CheckInEarly.py   # 欢太商城，早睡报名或打卡，建议配合Linux定时系统Crontab
+- config.py         # 账号信息
 
 ## Windows
 略
@@ -60,7 +61,7 @@ vi config.py
 accounts = [
     {
         'user' : '',    # 备注
-        'CK' : '',      # 账号环境变量 Cookie
+        'CK' : '',      # 用户环境变量 Cookie
         'UA' : ''       # 用户环境变量 User-Agent
     }
 ]
