@@ -10,19 +10,32 @@ import time
 import random
 import logging
 
+# 配置文件
+from config import accounts, Cash_LOG_PATH
+
+# 日志模块
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logFormat = logging.Formatter("%(message)s")
+LOG_FILE = os.path.join(Cash_LOG_PATH if Cash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime())}.log")
+
 try:
     import requests
 except ModuleNotFoundError:
-    print("缺少requests依赖！程序将尝试安装依赖！")
+    logger.info("缺少requests依赖！程序将尝试安装依赖！")
     os.system("pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple")
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
-# 日志模块
-logging.basicConfig(level=logging.INFO,format='%(message)s')
-logger=logging.getLogger(__name__)
+# 日志文件
+file = logging.FileHandler(LOG_FILE, mode='a', encoding='utf-8')
+file.setFormatter(logFormat)
+logger.addHandler(file)
 
-# 配置文件
-from config import accounts
+# 日志输出流
+stream = logging.StreamHandler()
+stream.setFormatter(logFormat)
+logger.addHandler(stream)
+
 
 class TimingCash:
     def __init__(self,dic):
@@ -93,9 +106,9 @@ class TimingCash:
         }
         response = self.sess.post(url=url,headers=headers,data=data).json()
         if response['code'] == 200:
-            logger.info(f"[定时红包]\t{response['data']['amount']}")
+            logger.info(f"[定时红包]\t第{dic['id']}个红包,{response['data']['amount']}")
         elif response['code'] == 1000001:
-            logger.info(f"[定时红包]\t{response['errorMessage']}")
+            logger.info(f"[定时红包]\t第{dic['id']}个红包,{response['errorMessage']}")
 
     def runtimeReward(self):
         for each in self.timingRewardList:
@@ -115,6 +128,7 @@ class TimingCash:
         if self.login() == True:
             if self.getDailyCashTask() == True:
                 self.runtimeReward()
+        logger.info('*'*50 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
