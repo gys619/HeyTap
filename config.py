@@ -9,14 +9,14 @@
 ## CK和UA信息需自行抓包,欢太商城 -> 我的 -> 任务中心 -> 领券中心
 ## 抓包地址:https://store.oppo.com/cn/oapi/users/web/checkPeople/isNewPeople
 # {
-#     'user':'',    # 备注
-#     'CK':'',      # Cookie
-#     'UA':''       # User-Agent
+#     'user':'',    # 备注，必要
+#     'CK':'',      # Cookie，必要
+#     'UA':''       # User-Agent，必要
 # },
 
 # 日志文件
-HeyTap_LOG_PATH = r""    # 欢太脚本日志存放路径
-Cash_LOG_PATH = r""      # 欢太定时红包日志存放路径
+HeyTap_LOG_PATH = ""    # 欢太脚本日志存放路径,非必要
+Cash_LOG_PATH = ""      # 欢太定时红包日志存放路径,非必要
 
 # 初始化日志路径
 if (HeyTap_LOG_PATH != "") and (not os.path.exists(HeyTap_LOG_PATH)):
