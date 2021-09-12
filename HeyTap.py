@@ -36,10 +36,6 @@ stream = logging.StreamHandler()
 stream.setFormatter(logFormat)
 logger.addHandler(stream)
 
-# 初始化日志路径
-if not os.path.exists(HeyTap_LOG_PATH):
-    os.mkdir(HeyTap_LOG_PATH)
-
 class HeyTap:
     def __init__(self,dic):
         self.dic = dic
@@ -640,7 +636,7 @@ class HeyTap:
                 self.runTaskCenter()                    # 运行任务中心
             if self.getDailyCashTask() == True:         # 获取天天领现金数据，判断CK是否正确(登录可能成功，但无法跑任务)
                 self.runTaskRewardList()                # 运行天天领现金
-            logger.info('*'*50 + '\n')
+            logger.info('*'*40 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
