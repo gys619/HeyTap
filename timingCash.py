@@ -22,7 +22,7 @@ LOG_FILE = os.path.join(Cash_LOG_PATH if Cash_LOG_PATH != "" else os.path.dirnam
 try:
     import requests
 except ModuleNotFoundError:
-    logger.info("缺少requests依赖！程序将尝试安装依赖！")
+    print("缺少requests依赖！程序将尝试安装依赖！")("缺少requests依赖！程序将尝试安装依赖！")
     os.system("pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple")
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
@@ -39,6 +39,9 @@ logger.addHandler(stream)
 # 初始化日志路径
 if not os.path.exists(Cash_LOG_PATH):
     os.mkdir(Cash_LOG_PATH)
+
+# 日志录入时间
+logger.info(f"时间:{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}")
 
 class TimingCash:
     def __init__(self,dic):
