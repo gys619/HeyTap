@@ -131,7 +131,7 @@ class TimingCash:
         if self.login() == True:
             if self.getDailyCashTask() == True:
                 self.runtimeReward()
-        logger.info('*'*50 + '\n')
+        logger.info('*'*40 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
