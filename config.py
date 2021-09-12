@@ -15,15 +15,10 @@
 # },
 
 # 日志文件
-HeyTap_LOG_PATH = ""    # 欢太脚本日志存放路径
-Cash_LOG_PATH = ""      # 欢太定时红包日志存放路径
+HeyTap_LOG_PATH = r""    # 欢太脚本日志存放路径
+Cash_LOG_PATH = r""      # 欢太定时红包日志存放路径
 
 accounts = [
-    {
-        'user':'',
-        'CK':'',
-        'UA':''
-    },
     {
         'user':'',
         'CK':'',
