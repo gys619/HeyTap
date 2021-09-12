@@ -36,6 +36,9 @@ stream = logging.StreamHandler()
 stream.setFormatter(logFormat)
 logger.addHandler(stream)
 
+# 初始化日志路径
+if not os.path.exists(Cash_LOG_PATH):
+    os.mkdir(Cash_LOG_PATH)
 
 class TimingCash:
     def __init__(self,dic):
