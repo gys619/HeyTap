@@ -41,7 +41,7 @@ if not os.path.exists(ClockIn_LOG_PATH):
     os.mkdir(ClockIn_LOG_PATH)
 
 # 日志录入时间
-logger.info(f"时间:{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}")
+logger.info(f"时间:{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}")
 
 class CheckInEarly:
     def __init__(self,dic):
