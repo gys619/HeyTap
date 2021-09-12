@@ -22,7 +22,7 @@ LOG_FILE = os.path.join(HeyTap_LOG_PATH if HeyTap_LOG_PATH != "" else os.path.di
 try:
     import requests
 except ModuleNotFoundError:
-    logger.info("缺少requests依赖！程序将尝试安装依赖！")
+    print("缺少requests依赖！程序将尝试安装依赖！")("缺少requests依赖！程序将尝试安装依赖！")
     os.system("pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple")
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
@@ -35,6 +35,9 @@ logger.addHandler(file)
 stream = logging.StreamHandler()
 stream.setFormatter(logFormat)
 logger.addHandler(stream)
+
+# 日志录入时间
+logger.info(f"时间:{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}")
 
 class HeyTap:
     def __init__(self,dic):
