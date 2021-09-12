@@ -17,7 +17,7 @@ from config import accounts, Cash_LOG_PATH
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logFormat = logging.Formatter("%(message)s")
-LOG_FILE = os.path.join(Cash_LOG_PATH if Cash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime())}.log")
+LOG_FILE = os.path.join(Cash_LOG_PATH if Cash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}-{os.path.basename(__file__)[:-3]}.log")
 
 try:
     import requests
@@ -106,9 +106,9 @@ class TimingCash:
         }
         response = self.sess.post(url=url,headers=headers,data=data).json()
         if response['code'] == 200:
-            logger.info(f"[定时红包]\t第{dic['id']}个红包,{response['data']['amount']}")
+            logger.info(f"[定时红包]\t第{dic['id']}个红包:{response['data']['amount']}")
         elif response['code'] == 1000001:
-            logger.info(f"[定时红包]\t第{dic['id']}个红包,{response['errorMessage']}")
+            logger.info(f"[定时红包]\t第{dic['id']}个红包:{response['errorMessage']}")
 
     def runtimeReward(self):
         for each in self.timingRewardList:
