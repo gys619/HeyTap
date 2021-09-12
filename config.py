@@ -18,6 +18,12 @@
 HeyTap_LOG_PATH = r""    # 欢太脚本日志存放路径
 Cash_LOG_PATH = r""      # 欢太定时红包日志存放路径
 
+# 初始化日志路径
+if (HeyTap_LOG_PATH != "") and (not os.path.exists(HeyTap_LOG_PATH)):
+    os.mkdir(HeyTap_LOG_PATH)
+if (Cash_LOG_PATH != "") and (not os.path.exists(Cash_LOG_PATH)):
+    os.mkdir(Cash_LOG_PATH)
+
 accounts = [
     {
         'user':'',
