@@ -140,7 +140,7 @@ if __name__ == '__main__':
                     timingCash.start()
                     break
                 except requests.exceptions.ConnectionError:
-                    print(f"{timingCash.dic['user']}\t请求失败，随机延迟后再次访问")
+                    logger.info(f"{timingCash.dic['user']}\t请求失败，随机延迟后再次访问")
                     time.sleep(random.randint(2,5))
                     continue
             else:
