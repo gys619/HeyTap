@@ -376,7 +376,6 @@ class HeyTap:
             'captcha':'',
             'isCheck':0,
             'source_type':501,
-            's_channel':'xiaomi',
             'sku':'',
             'spu':''
         }
