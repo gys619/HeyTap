@@ -167,7 +167,7 @@ class HeyTap:
             elif flag == 2:     # 来源赚积分的浏览任务
                 self.getLottery(dic)
             elif flag == 3:     # 来源天天领现金
-                self.getCash(dic=dic,taskName=dic['taskName'],channel=3)
+                self.getCash(dic=dic)
 
     # 分享任务
     def runShareTask(self):
@@ -201,7 +201,7 @@ class HeyTap:
         if flag == 1: # 来源任务中心
             self.cashingCredits(self.shareData['name'],self.shareData['marking'], self.shareData['type'],self.shareData['credits'])
         elif flag == 2: #来源天天赚钱
-            self.getCash(dic=dic,taskName=dic['taskName'],channel=3)
+            self.getCash(dic=dic)
 
 
     # 浏览推送任务
@@ -607,7 +607,7 @@ class HeyTap:
         if response['code'] == 200:
             logger.info(f"正在执行{dic['taskName']}...")
             time.sleep(random.randint(5,7))
-            self.getCash(dic=dic,taskName=dic['taskName'],channel=3)
+            self.getCash(dic=dic)
         else:
             logger.info(f"{dic['taskName']}执行失败")
 
