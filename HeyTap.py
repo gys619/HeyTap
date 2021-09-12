@@ -37,7 +37,7 @@ stream.setFormatter(logFormat)
 logger.addHandler(stream)
 
 # 日志录入时间
-logger.info(f"时间:{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}")
+logger.info(f"时间:{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}")
 
 class HeyTap:
     def __init__(self,dic):
