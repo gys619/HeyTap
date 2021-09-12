@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2021/8/31
-# @Author  : 2984922017@qq.com
+# @Author  : 华灯初上
 # @File    : HeyTap.py
 # @Software: PyCharm
 import os
@@ -601,7 +601,7 @@ class HeyTap:
                     self.getCash(dic=each)
                 elif each['taskStatus'] == 2:
                     logger.info(f"{each['taskName']}\t已领取")
-                    
+
     # 跑任务中心
     # 位置:我的 -> 任务中心
     def runTaskCenter(self):
