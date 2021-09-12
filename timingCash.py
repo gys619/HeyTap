@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO,format='%(message)s')
 logger=logging.getLogger(__name__)
 
 # 配置文件
-from config import lists
+from config import accounts
 
 class TimingCash:
     def __init__(self,dic):
@@ -117,17 +117,18 @@ class TimingCash:
                 self.runtimeReward()
 
 if __name__ == '__main__':
-    for account in lists:
-        timingCash = TimingCash(account)
-        for count in range(3):
-            try:
-                time.sleep(random.randint(2,5))    # 随机延时
-                timingCash.start()
+    for each in accounts:
+        if each['CK'] != "" and each['UA'] != "":
+            timingCash = TimingCash(each)
+            for count in range(3):
+                try:
+                    time.sleep(random.randint(2,5))    # 随机延时
+                    timingCash.start()
+                    break
+                except requests.exceptions.ConnectionError:
+                    print(f"{timingCash.dic['user']}\t请求失败，随机延迟后再次访问")
+                    time.sleep(random.randint(2,5))
+                    continue
+            else:
+                logger.info(f"账号: {timingCash.dic['user']}\n状态: 取消登录\n原因: 多次登录失败")
                 break
-            except requests.exceptions.ConnectionError:
-                print(f"{timingCash.dic['user']}\t请求失败，随机延迟后再次访问")
-                time.sleep(random.randint(2,5))
-                continue
-        else:
-            logger.info(f"账号: {timingCash.dic['user']}\n状态: 取消登录\n原因: 多次登录失败")
-            break
