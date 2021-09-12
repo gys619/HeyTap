@@ -69,7 +69,7 @@ accounts = [
 
 #### 环境变量
 - CK和UA信息需自行抓包，欢太商城 -> 我的 -> 任务中心 -> 领券中心
-- 抓包地址:https://store.oppo.com/cn/oapi/users/web/checkPeople/isNewPeople
+- 抓包地址:`https://store.oppo.com/cn/oapi/users/web/checkPeople/isNewPeople`
 
 #### 其它帮助
 [crontab 帮助文档](https://www.runoob.com/w3cnote/linux-crontab-tasks.html)
