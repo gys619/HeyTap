@@ -79,14 +79,15 @@ class CheckInEarly:
                    }
         response = self.sess.get(url=url,headers=headers).json()
         if response['code'] == 200:
-            if response['data']['clockInStatus'] == 1:
+            if response['data']['clockInStatus'] == 0:
+                if response['data']['applyStatus'] == 1:
+                    logger.info(f"{self.dic['user']}\t报名成功!")
+                elif response['data']['applyStatus'] == 2:
+                    logger.info(f"{self.dic['user']}\t已报名!")
+            elif response['data']['clockInStatus'] == 1:
                 logger.info(f"{self.dic['user']}\t早睡瓜分积分，打卡成功!")
             elif response['data']['clockInStatus'] == 2:
                 logger.info(f"{self.dic['user']}\t早睡瓜分积分,已成功打卡!")
-            if response['data']['applyStatus'] == 1:
-                logger.info(f"{self.dic['user']}\t报名成功!")
-            elif response['data']['applyStatus'] == 2:
-                logger.info(f"{self.dic['user']}\t已报名!")
 
     # 执行欢太商城实例对象
     def start(self):
@@ -98,6 +99,7 @@ class CheckInEarly:
         })
         if self.login() == True:
             self.early()
+        logger.info('*'*40 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
