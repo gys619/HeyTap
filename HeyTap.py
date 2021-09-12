@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2021/8/31
-# @Author  : 华灯初上
+# @Author  : 2984922017@qq.com
 # @File    : HeyTap.py
 # @Software: PyCharm
 import os
@@ -72,16 +72,6 @@ class HeyTap:
         else:
             logger.info(f"{self.dic['user']}\t失败原因:{response['errorMessage']}")
             return False
-
-    # 跑任务中心
-    # 位置:我的 -> 任务中心
-    def runTaskCenter(self):
-        self.clockIn()              # 签到打卡
-        self.runViewTask()          # 浏览任务
-        self.runShareTask()         # 分享任务
-        self.runViewPush()          # 浏览推送任务
-        self.runEarnPoint()         # 赚积分活动
-        # self.doubledLottery()       # 天天积分翻倍，基本上抽不中
 
     # 每日签到
     # 位置: APP → 我的 → 签到
@@ -443,79 +433,6 @@ class HeyTap:
                 logger.info(f"翻倍转盘\t抽奖失败:{response}")
             time.sleep(random.randint(1,3))
 
-    def runTaskRewardList(self):
-        for each in self.taskRewardList:
-            if each['taskName'] == '浏览商品':
-                if each['taskStatus'] == 0:
-                    self.viewGoods(count=6,flag=3,dic=each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览秒杀专区':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '分享商品':
-                if each['taskStatus'] == 0:
-                    self.shareGoods(flag=2,count=2,dic=each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '观看直播':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览签到页':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            if each['taskName'] == '浏览领券中心':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览realme商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览指定商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览一加商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览OPPO商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-
     # 秒杀详情页获取商品数据
     def getGoodMess(self,count=10):
         taskUrl = f'https://msec.opposhop.cn/goods/v1/SeckillRound/goods/{random.randint(100,250)}'    # 随机商品
@@ -611,6 +528,90 @@ class HeyTap:
         else:
             logger.info(f"{dic['taskName']}执行失败")
 
+
+    def runTaskRewardList(self):
+        for each in self.taskRewardList:
+            if each['taskName'] == '浏览商品':
+                if each['taskStatus'] == 0:
+                    self.viewGoods(count=6,flag=3,dic=each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '浏览秒杀专区':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '分享商品':
+                if each['taskStatus'] == 0:
+                    self.shareGoods(flag=2,count=2,dic=each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '观看直播':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '浏览签到页':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            if each['taskName'] == '浏览领券中心':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '浏览realme商品':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '浏览指定商品':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '浏览一加商品':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+            elif each['taskName'] == '浏览OPPO商品':
+                if each['taskStatus'] == 0:
+                    self.viewCashTask(each)
+                elif each['taskStatus'] == 1:
+                    self.getCash(dic=each)
+                elif each['taskStatus'] == 2:
+                    logger.info(f"{each['taskName']}\t已领取")
+                    
+    # 跑任务中心
+    # 位置:我的 -> 任务中心
+    def runTaskCenter(self):
+        self.clockIn()              # 签到打卡
+        self.runViewTask()          # 浏览任务
+        self.runShareTask()         # 分享任务
+        self.runViewPush()          # 浏览推送任务
+        self.runEarnPoint()         # 赚积分活动
+        # self.doubledLottery()       # 天天积分翻倍，基本上抽不中
+
     # 执行欢太商城实例对象
     def start(self):
         self.sess.headers.update({
@@ -628,16 +629,17 @@ class HeyTap:
 
 if __name__ == '__main__':
     for each in accounts:
-        heyTap = HeyTap(each)
-        for count in range(3):
-            try:
-                time.sleep(random.randint(2,5))    # 随机延时
-                heyTap.start()
+        if each['CK'] != "" and each['UA'] != "":
+            heyTap = HeyTap(each)
+            for count in range(3):
+                try:
+                    time.sleep(random.randint(2,5))    # 随机延时
+                    heyTap.start()
+                    break
+                except requests.exceptions.ConnectionError:
+                    print(f"{heyTap.dic['user']}\t请求失败，随机延迟后再次访问")
+                    time.sleep(random.randint(2,5))
+                    continue
+            else:
+                logger.info(f"账号: {heyTap.dic['user']}\n状态: 取消登录\n原因: 多次登录失败")
                 break
-            except requests.exceptions.ConnectionError:
-                print(f"{heyTap.dic['user']}\t请求失败，随机延迟后再次访问")
-                time.sleep(random.randint(2,5))
-                continue
-        else:
-            logger.info(f"账号: {heyTap.dic['user']}\n状态: 取消登录\n原因: 多次登录失败")
-            break
