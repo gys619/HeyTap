@@ -17,7 +17,7 @@ from config import accounts, HeyTap_LOG_PATH
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logFormat = logging.Formatter("%(message)s")
-LOG_FILE = os.path.join(HeyTap_LOG_PATH if HeyTap_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime())}.log")
+LOG_FILE = os.path.join(HeyTap_LOG_PATH if HeyTap_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}-{os.path.basename(__file__)[:-3]}.log")
 
 try:
     import requests
