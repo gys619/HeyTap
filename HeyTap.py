@@ -1,7 +1,7 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2021/8/31
-# @Author  : 华灯初上
+# @Author  : 2984922017@qq.com
 # @File    : HeyTap.py
 # @Software: PyCharm
 import os
@@ -10,19 +10,32 @@ import time
 import random
 import logging
 
+# 配置文件
+from config import accounts, HeyTap_LOG_PATH
+
+# 日志模块
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logFormat = logging.Formatter("%(message)s")
+LOG_FILE = os.path.join(HeyTap_LOG_PATH if HeyTap_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime())}.log")
+
 try:
     import requests
 except ModuleNotFoundError:
-    print("缺少requests依赖！程序将尝试安装依赖！")
+    logger.info("缺少requests依赖！程序将尝试安装依赖！")
     os.system("pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple")
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
-# 日志模块
-logging.basicConfig(level=logging.INFO,format='%(message)s')
-logger=logging.getLogger(__name__)
+# 日志文件
+file = logging.FileHandler(LOG_FILE, mode='a', encoding='utf-8')
+file.setFormatter(logFormat)
+logger.addHandler(file)
 
-# 配置文件
-from config import accounts
+# 日志输出流
+stream = logging.StreamHandler()
+stream.setFormatter(logFormat)
+logger.addHandler(stream)
+
 
 class HeyTap:
     def __init__(self,dic):
@@ -59,7 +72,6 @@ class HeyTap:
             'source_type': '501',
             'clientPackage': 'com.oppo.store',
             'Accept': 'application/json, text/plain, */*',
-            'Referer': 'https://store.oppo.com/cn/app/taskCenter/index',
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'zh-CN,en-US;q=0.9',
             'X-Requested-With': 'com.oppo.store',
@@ -376,6 +388,7 @@ class HeyTap:
             'captcha':'',
             'isCheck':0,
             'source_type':501,
+            's_channel':'xiaomi',
             'sku':'',
             'spu':''
         }
