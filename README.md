@@ -29,7 +29,7 @@
 * [x] 天天领现金任务列表
 * [x] 天天领现金定时红包
 * [x] 早睡打卡
-* [ ] 发信功能(太懒了，下次再写)
+* [x] 发信功能(太懒了，只实现一个)
 
 ## 文件说明
 - HeyTap.py         # 欢太商城一键脚本
@@ -57,9 +57,25 @@ vi config.py
 ### 配置信息
 编辑 `config.py`
 
+#### 管理员配置
+```json
+admin = {
+    "pushGroup" :{
+        "pushToken": "",                            # Push Plus Token
+        "pushTopic": ""                             # Push Plus群组编码
+    },
+    "mask":['', '']                                 # 屏蔽某些脚本的通知功能，如:['HeyTap','dailyCash']
+}
+```
+
 #### 用户信息
 ```json
 accounts = [
+    {
+        'user' : '',    # 备注
+        'CK' : '',      # 用户环境变量 Cookie
+        'UA' : ''       # 用户环境变量 User-Agent
+    },
     {
         'user' : '',    # 备注
         'CK' : '',      # 用户环境变量 Cookie
