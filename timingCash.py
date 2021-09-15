@@ -17,7 +17,7 @@ from config import accounts, timeCash_LOG_PATH
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logFormat = logging.Formatter("%(message)s")
-LOG_FILE = os.path.join(timeCash_LOG_PATH if timeCash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}-{os.path.basename(__file__)[:-3]}.log")
+LOG_FILE = os.path.join(timeCash_LOG_PATH if timeCash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{os.path.basename(__file__)[:-3]}.log")
 
 try:
     import requests
@@ -27,7 +27,7 @@ except ModuleNotFoundError:
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
 # 日志文件
-file = logging.FileHandler(LOG_FILE, mode='a', encoding='utf-8')
+file = logging.FileHandler(LOG_FILE, mode='w', encoding='utf-8')
 file.setFormatter(logFormat)
 logger.addHandler(file)
 
