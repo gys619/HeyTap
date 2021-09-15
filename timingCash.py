@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2021/9/11
+# @Time    : 2021/9/biliTask
 # @Author  : 2984922017@qq.com
 # @File    : timingCash.py
 # @Software: PyCharm
@@ -11,18 +11,18 @@ import random
 import logging
 
 # 配置文件
-from config import accounts, Cash_LOG_PATH
+from config import accounts, timeCash_LOG_PATH
 
 # 日志模块
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logFormat = logging.Formatter("%(message)s")
-LOG_FILE = os.path.join(Cash_LOG_PATH if Cash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}-{os.path.basename(__file__)[:-3]}.log")
+LOG_FILE = os.path.join(timeCash_LOG_PATH if timeCash_LOG_PATH != "" else os.path.dirname(os.path.abspath(__file__)) ,f"{time.strftime('%Y-%m-%d-%H-%M',time.localtime())}-{os.path.basename(__file__)[:-3]}.log")
 
 try:
     import requests
 except ModuleNotFoundError:
-    print("缺少requests依赖！程序将尝试安装依赖！")("缺少requests依赖！程序将尝试安装依赖！")
+    print("缺少requests依赖！程序将尝试安装依赖！")
     os.system("pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple")
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
@@ -35,10 +35,6 @@ logger.addHandler(file)
 stream = logging.StreamHandler()
 stream.setFormatter(logFormat)
 logger.addHandler(stream)
-
-# 初始化日志路径
-if not os.path.exists(Cash_LOG_PATH):
-    os.mkdir(Cash_LOG_PATH)
 
 # 日志录入时间
 logger.info(f"时间:{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}")
@@ -88,7 +84,7 @@ class TimingCash:
             self.timingRewardList = response['data']['timingRewardList']
             return True
         elif response['code'] == 1000001:
-            logger.info(response['errorMessage'])
+            logger.info(f"[定时红包]\t{response['errorMessage']}")
             return False
 
     def getCash(self,dic):
@@ -134,7 +130,7 @@ class TimingCash:
         if self.login() == True:
             if self.getDailyCashTask() == True:
                 self.runtimeReward()
-        logger.info('*'*40 + '\n')
+        logger.info('*' * 40 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
