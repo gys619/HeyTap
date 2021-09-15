@@ -22,7 +22,7 @@ LOG_FILE = os.path.join(HeyTap_LOG_PATH if HeyTap_LOG_PATH != "" else os.path.di
 try:
     import requests
 except ModuleNotFoundError:
-    print("缺少requests依赖！程序将尝试安装依赖！")("缺少requests依赖！程序将尝试安装依赖！")
+    print("缺少requests依赖！程序将尝试安装依赖！")
     os.system("pip3 install requests -i https://pypi.tuna.tsinghua.edu.cn/simple")
     os.execl(sys.executable, 'python3', __file__, *sys.argv)
 
@@ -126,6 +126,25 @@ class HeyTap:
         else:
             logger.info(f"{self.dic['user']}\t未知错误")
 
+    # 秒杀详情页获取商品数据
+    def getGoodMess(self,count=10):
+        taskUrl = f'https://msec.opposhop.cn/goods/v1/SeckillRound/goods/{random.randint(100,250)}'    # 随机商品
+        headers = {
+            'clientPackage': 'com.oppo.store',
+            'Host': 'msec.opposhop.cn',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Connection': 'keep-alive',
+            'User-Agent': 'okhttp/3.12.12.200sp1',
+            'Accept-Encoding': 'gzip',
+        }
+        params = {
+            'pageSize':count + random.randint(1,3)
+        }
+        response = self.sess.get(url=taskUrl,headers=headers,params=params).json()
+        if response['meta']['code'] == 200:
+            return response
+
     # 整合每日浏览、分享、推送数据
     def dailyTask(self):
         self.clockInData = self.taskData['userReportInfoForm']  # 签到数据源
@@ -170,8 +189,6 @@ class HeyTap:
                 self.cashingCredits(self.viewData['name'], self.viewData['marking'], self.viewData['type'],self.viewData['credits'])
             elif flag == 2:     # 来源赚积分的浏览任务
                 self.getLottery(dic)
-            elif flag == 3:     # 来源天天领现金
-                self.getCash(dic=dic)
 
     # 分享任务
     def runShareTask(self):
@@ -204,8 +221,6 @@ class HeyTap:
             time.sleep(random.randint(7,10))
         if flag == 1: # 来源任务中心
             self.cashingCredits(self.shareData['name'],self.shareData['marking'], self.shareData['type'],self.shareData['credits'])
-        elif flag == 2: #来源天天赚钱
-            self.getCash(dic=dic)
 
 
     # 浏览推送任务
@@ -447,175 +462,6 @@ class HeyTap:
                 logger.info(f"翻倍转盘\t抽奖失败:{response}")
             time.sleep(random.randint(1,3))
 
-    # 秒杀详情页获取商品数据
-    def getGoodMess(self,count=10):
-        taskUrl = f'https://msec.opposhop.cn/goods/v1/SeckillRound/goods/{random.randint(100,250)}'    # 随机商品
-        headers = {
-            'clientPackage': 'com.oppo.store',
-            'Host': 'msec.opposhop.cn',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Connection': 'keep-alive',
-            'User-Agent': 'okhttp/3.12.12.200sp1',
-            'Accept-Encoding': 'gzip',
-        }
-        params = {
-            'pageSize':count + random.randint(1,3)
-        }
-        response = self.sess.get(url=taskUrl,headers=headers,params=params).json()
-        if response['meta']['code'] == 200:
-            return response
-
-    def getCash(self,dic):
-        url = 'https://store.oppo.com/cn/oapi/omp-web/web/dailyCash/drawReward'
-        headers = {
-            'Host': 'store.oppo.com',
-            'Connection': 'keep-alive',
-            'Origin': 'https://store.oppo.com',
-            'source_type': '501',
-            'clientPackage': 'com.oppo.store',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json, text/plain, */*',
-            'Referer': 'https://store.oppo.com/cn/app/cashRedEnvelope?activityId=1&us=shouye&um=xuanfu&uc=xianjinhongbao',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'zh-CN,en-US;q=0.9'
-        }
-        data = {
-            'activityId':1,
-            'channel':3,
-            'channelRewardId':dic['id']
-        }
-        response = self.sess.post(url=url,headers=headers,data=data).json()
-        if response['code'] == 200:
-            logger.info(f"[{dic['taskName']}]\t{response['data']['amount']}")
-        elif response['code'] == 1000001:
-            logger.info(f"[{dic['taskName']}]\t{response['errorMessage']}")
-
-    # 天天领取现金
-    def getDailyCashTask(self):
-        url = 'https://store.oppo.com/cn/oapi/omp-web/web/dailyCash/queryActivityReward'
-        headers = {
-            'Host': 'store.oppo.com',
-            'Connection': 'keep-alive',
-            'source_type': '501',
-            'clientPackage': 'com.oppo.store',
-            'Accept': 'application/json, text/plain, */*',
-            'Referer': 'https://store.oppo.com/cn/app/cashRedEnvelope?activityId=1&us=shouye&um=xuanfu&uc=xianjinhongbao',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'zh-CN,en-US;q=0.9'
-        }
-        params = {
-            'activityId':1
-        }
-        response = self.sess.get(url=url,headers=headers,params=params).json()
-        if response['code'] == 200:
-            self.taskRewardList = response['data']['taskRewardList']
-            self.timingRewardList = response['data']['timingRewardList']
-            return True
-        elif response['code'] == 1000001:
-            logger.info(response['errorMessage'])
-            return False
-
-    # 天天领现金浏览模板
-    def viewCashTask(self,dic):
-        url = 'https://store.oppo.com/cn/oapi/credits/web/dailyCash/reportDailyTask'
-        param = {
-            'taskType':dic['taskType'],
-            'taskId':f"dailyCash{dic['id']}"
-        }
-        headers = {
-            'Host': 'store.oppo.com',
-            'Connection': 'keep-alive',
-            'source_type': '501',
-            'clientPackage': 'com.oppo.store',
-            'Cache-Control': 'no-cache',
-            'Accept': 'application/json, text/plain, */*',
-            'Referer': 'https://store.oppo.com/cn/app/cashRedEnvelope?activityId=1&us=shouye&um=xuanfu&uc=xianjinhongbao',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'zh-CN,en-US;q=0.9'
-        }
-        response = self.sess.get(url=url,headers=headers,params=param).json()
-        if response['code'] == 200:
-            logger.info(f"正在执行{dic['taskName']}...")
-            time.sleep(random.randint(5,7))
-            self.getCash(dic=dic)
-        else:
-            logger.info(f"{dic['taskName']}执行失败")
-
-
-    def runTaskRewardList(self):
-        for each in self.taskRewardList:
-            if each['taskName'] == '浏览商品':
-                if each['taskStatus'] == 0:
-                    self.viewGoods(count=6,flag=3,dic=each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览秒杀专区':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '分享商品':
-                if each['taskStatus'] == 0:
-                    self.shareGoods(flag=2,count=2,dic=each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '观看直播':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览签到页':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            if each['taskName'] == '浏览领券中心':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览realme商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览指定商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览一加商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-            elif each['taskName'] == '浏览OPPO商品':
-                if each['taskStatus'] == 0:
-                    self.viewCashTask(each)
-                elif each['taskStatus'] == 1:
-                    self.getCash(dic=each)
-                elif each['taskStatus'] == 2:
-                    logger.info(f"{each['taskName']}\t已领取")
-
     # 跑任务中心
     # 位置:我的 -> 任务中心
     def runTaskCenter(self):
@@ -637,9 +483,7 @@ class HeyTap:
         if self.login() == True:
             if self.getTaskList() == True:              # 获取任务中心数据，判断CK是否正确(登录可能成功，但无法跑任务)
                 self.runTaskCenter()                    # 运行任务中心
-            if self.getDailyCashTask() == True:         # 获取天天领现金数据，判断CK是否正确(登录可能成功，但无法跑任务)
-                self.runTaskRewardList()                # 运行天天领现金
-            logger.info('*'*40 + '\n')
+            logger.info('*' * 40 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
