@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2021/8/31
+# @Time    : 2021/9/12
 # @Author  : 2984922017@qq.com
 # @File    : HeyTap.py
 # @Software: PyCharm
@@ -496,6 +496,8 @@ class HeyTap:
                     logger.info(f"Push Plus发信失败！\t失败原因:{response['msg']}")
             else:
                 logger.info(f"未配置pushPlus Token,取消配信！")
+        else:
+            logger.info(f"{os.path.basename(__file__)[:-3]}\t发信功能被屏蔽")
 
     # 执行欢太商城实例对象
     def start(self):
