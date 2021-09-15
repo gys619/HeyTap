@@ -5,13 +5,14 @@
 # @File    : dailyCash.py
 # @Software: PyCharm
 import os
-import random
 import sys
+import json
 import time
+import random
 import logging
 
 # 配置文件
-from config import accounts, dailyCash_LOG_PATH
+from config import admin, accounts, dailyCash_LOG_PATH
 
 # 日志模块
 logger = logging.getLogger(__name__)
@@ -125,7 +126,7 @@ class DailyCash:
         if response['meta']['code'] == 200:
             return response
         else:
-            print(response)
+            logger.info(response)
 
     def getCash(self,dic):
         url = 'https://store.oppo.com/cn/oapi/omp-web/web/dailyCash/drawReward'
@@ -277,6 +278,30 @@ class DailyCash:
                 elif each['taskStatus'] == 2:
                     logger.info(f"{each['taskName']}\t已领取")
 
+    # pushPlus配信
+    @staticmethod
+    def sendForPush():
+        if [each for each in admin['mask'] if each == os.path.basename(__file__)[:-3]] == []:
+            with open(file=LOG_FILE,mode='r',encoding='utf-8') as f:
+                content = f.read()
+            url = 'http://www.pushplus.plus/send'
+            data = {
+                "token": admin['pushGroup']['pushToken'],
+                "title":"易班打卡通知",
+                "content":content,
+                "template":"txt"
+            }
+            if admin['pushGroup']['pushToken'] != "":
+                if admin['pushGroup']['pushTopic'] != "":
+                    data['topic'] = admin['pushGroup']['pushTopic']
+                response = requests.post(url=url,data=json.dumps(data)).json()
+                if response['code'] == 200:
+                    logger.info(f"Push Plus发信成功！\n")
+                else:
+                    logger.info(f"Push Plus发信失败！\t失败原因:{response['msg']}")
+            else:
+                logger.info(f"未配置pushPlus Token,取消配信！")
+
     # 执行欢太商城实例对象
     def start(self):
         self.sess.headers.update({
@@ -306,3 +331,4 @@ if __name__ == '__main__':
             else:
                 logger.info(f"账号: {dailyCash.dic['user']}\n状态: 取消登录\n原因: 多次登录失败")
                 break
+    DailyCash.sendForPush()
