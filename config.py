@@ -6,6 +6,15 @@
 # @Software: PyCharm
 import os
 
+## Push Plus发信平台
+## 官方网站：http://www.pushplus.plus
+## 填写您的Token，微信扫码登录后一对一推送或一对多推送下面的token
+
+# "pushGroup" :{
+#     "pushToken": "",    # Push Plus Token,非必要,可单独使用
+#     "pushTopic": ""     # Push Plus群组编码,非必要
+# }
+
 ## CK和UA信息需自行抓包,欢太商城 -> 我的 -> 任务中心 -> 领券中心
 # 抓包地址:【https://store.oppo.com/cn/oapi/users/web/checkPeople/isNewPeople】
 
@@ -35,6 +44,15 @@ if (ClockIn_LOG_PATH != "") and (not os.path.exists(ClockIn_LOG_PATH)):
     os.mkdir(ClockIn_LOG_PATH)
 
 
+## 管理员设置
+admin = {
+    "pushGroup" :{
+        "pushToken": "",    # Push Plus Token
+        "pushTopic": ""                                 # Push Plus群组编码
+    },
+    "mask":[]                                               # 屏蔽某些脚本的通知功能，如:['HeyTap','dailyCash']
+}
+
 ## 账号管理
 accounts = [
     {
@@ -42,9 +60,4 @@ accounts = [
         'CK':'',
         'UA':''
     },
-    {
-        'user':'',
-        'CK':'',
-        'UA':''
-    }
 ]
