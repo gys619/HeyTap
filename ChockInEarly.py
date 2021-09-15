@@ -45,29 +45,6 @@ class CheckInEarly:
         self.dic = dic
         self.sess = requests.session()
 
-    # pushPlus配信
-    @staticmethod
-    def sendForPush():
-        with open(file=LOG_FILE,mode='r',encoding='utf-8') as f:
-            content = f.read()
-        url = 'http://www.pushplus.plus/send'
-        data = {
-            "token": admin['pushGroup']['pushToken'],
-            "title":"易班打卡通知",
-            "content":content,
-            "template":"txt"
-        }
-        if admin['pushGroup']['pushToken'] != "":
-            if admin['pushGroup']['pushTopic'] != "":
-                data['topic'] = admin['pushGroup']['pushTopic']
-            response = requests.post(url=url,data=json.dumps(data)).json()
-            if response['code'] == 200:
-                logger.info(f"Push Plus发信成功！\n")
-            else:
-                logger.info(f"Push Plus发信失败！\t失败原因:{response['msg']}")
-        else:
-            logger.info(f"未配置pushPlus Token,取消配信！")
-
     # 登录验证
     def login(self):
         url = 'https://store.oppo.com/cn/oapi/users/web/member/check'
@@ -115,6 +92,30 @@ class CheckInEarly:
                 logger.info(f"{self.dic['user']}\t早睡瓜分积分,已成功打卡!")
         elif response['code'] == 1000005:
             logger.info(f"{self.dic['user']}\t{response['errorMessage']}")
+
+    # pushPlus配信
+    @staticmethod
+    def sendForPush():
+        if [each for each in admin['mask'] if each == os.path.basename(__file__)[:-3]] == []:
+            with open(file=LOG_FILE,mode='r',encoding='utf-8') as f:
+                content = f.read()
+            url = 'http://www.pushplus.plus/send'
+            data = {
+                "token": admin['pushGroup']['pushToken'],
+                "title":"易班打卡通知",
+                "content":content,
+                "template":"txt"
+            }
+            if admin['pushGroup']['pushToken'] != "":
+                if admin['pushGroup']['pushTopic'] != "":
+                    data['topic'] = admin['pushGroup']['pushTopic']
+                response = requests.post(url=url,data=json.dumps(data)).json()
+                if response['code'] == 200:
+                    logger.info(f"Push Plus发信成功！\n")
+                else:
+                    logger.info(f"Push Plus发信失败！\t失败原因:{response['msg']}")
+            else:
+                logger.info(f"未配置pushPlus Token,取消配信！")
 
     # 执行欢太商城实例对象
     def start(self):
