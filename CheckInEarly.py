@@ -36,10 +36,6 @@ stream = logging.StreamHandler()
 stream.setFormatter(logFormat)
 logger.addHandler(stream)
 
-# 初始化日志路径
-if not os.path.exists(ClockIn_LOG_PATH):
-    os.mkdir(ClockIn_LOG_PATH)
-
 # 日志录入时间
 logger.info(f"时间:{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}")
 
@@ -91,6 +87,8 @@ class CheckInEarly:
                 logger.info(f"{self.dic['user']}\t早睡瓜分积分，打卡成功!")
             elif response['data']['clockInStatus'] == 2:
                 logger.info(f"{self.dic['user']}\t早睡瓜分积分,已成功打卡!")
+        elif response['code'] == 1000005:
+            logger.info(f"{self.dic['user']}\t{response['errorMessage']}")
 
     # 执行欢太商城实例对象
     def start(self):
@@ -102,7 +100,7 @@ class CheckInEarly:
         })
         if self.login() == True:
             self.early()
-        logger.info('*'*40 + '\n')
+        logger.info('*' * 40 + '\n')
 
 if __name__ == '__main__':
     for each in accounts:
