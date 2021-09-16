@@ -32,11 +32,15 @@
 * [x] 发信功能(太懒了，只实现一个)
 
 ## 文件说明
-- HeyTap.py         # 欢太商城一键脚本
-- timingCash.py     # 欢太定时红包，建议配合Linux定时系统Crontab
-- dailyCash.py      # 每日现金任务
-- CheckInEarly.py   # 欢太商城，早睡报名或打卡，建议配合Linux定时系统Crontab
-- config.py         # 账号信息
+```text
+│  HeyTap.py         # 欢太商城一键脚本
+│  timingCash.py     # 欢太定时红包，建议配合Linux定时系统Crontab
+|  dailyCash.py      # 每日现金任务
+│  CheckInEarly.py   # 欢太商城，早睡报名或打卡，建议配合Linux定时系统Crontab
+│  PointsBattle.py   # 积分大作战
+|  config.py         # 账号信息
+|  README.md         # 说明文档
+```
 
 ## Windows
 略
