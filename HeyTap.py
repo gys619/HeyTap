@@ -154,8 +154,8 @@ class HeyTap:
                 self.viewData = eachTask
             elif eachTask['marking'] == 'daily_sharegoods':
                 self.shareData = eachTask
-            elif eachTask['marking'] == 'daily_viewpush':
-                self.pushData = eachTask
+             # elif eachTask['marking'] == 'daily_viewpush':
+                # self.pushData = eachTask
 
     # 浏览任务
     def runViewTask(self):
