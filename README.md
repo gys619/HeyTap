@@ -34,7 +34,7 @@
 
 ## 文件说明
 ```text
-│  HeyTap.py         # 欢太商城一键脚本
+│  HeyTap.py         # 欢太商城任务中心
 │  timingCash.py     # 欢太定时红包，建议配合Linux定时系统Crontab
 |  dailyCash.py      # 每日现金任务
 │  CheckInEarly.py   # 欢太商城，早睡报名或打卡，建议配合Linux定时系统Crontab
