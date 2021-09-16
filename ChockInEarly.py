@@ -38,7 +38,7 @@ stream.setFormatter(logFormat)
 logger.addHandler(stream)
 
 # 日志录入时间
-logger.info(f"时间:{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}")
+logger.info(f"任务:{'早睡打卡'}\n时间:{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}")
 
 class CheckInEarly:
     def __init__(self,dic):
@@ -102,7 +102,7 @@ class CheckInEarly:
             url = 'http://www.pushplus.plus/send'
             data = {
                 "token": admin['pushGroup']['pushToken'],
-                "title":"易班打卡通知",
+                "title":"欢太任务通知",
                 "content":content,
                 "template":"txt"
             }
