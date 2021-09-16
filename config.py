@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2021/9/11
+# @Time    : 2021/9/12
 # @Author  : 2984922017@qq.com
 # @File    : config.py
 # @Software: PyCharm
@@ -26,12 +26,31 @@ import os
 # },
 
 
+## 管理员设置
+admin = {
+    "pushGroup" :{
+        "pushToken": "",    # Push Plus Token
+        "pushTopic": ""                                 # Push Plus群组编码
+    },
+    "mask":['','']                                   # 屏蔽某些脚本的通知功能，如:['HeyTap','dailyCash']
+}
+
+## 账号管理
+accounts = [
+    {
+        'user':'',
+        'CK':'',
+        'UA':''
+    }
+]
+
+
 ## 日志文件
 HeyTap_LOG_PATH = ""        # 欢太任务中心脚本日志存放路径,非必要
 dailyCash_LOG_PATH = ""     # 欢太天天现金脚本日志存放路径,非必要
 timeCash_LOG_PATH = ""      # 欢太定时红包日志存放路径,非必要
 ClockIn_LOG_PATH = ""       # 欢太早睡打卡日志存放路径,非必要
-
+Battle_LOG_PATH = ""        # 积分大作战日志存放路径,非必要
 
 ## 初始化日志路径(不用管)
 if (HeyTap_LOG_PATH != "") and (not os.path.exists(HeyTap_LOG_PATH)):
@@ -42,22 +61,5 @@ if (timeCash_LOG_PATH != "") and (not os.path.exists(timeCash_LOG_PATH)):
     os.mkdir(timeCash_LOG_PATH)
 if (ClockIn_LOG_PATH != "") and (not os.path.exists(ClockIn_LOG_PATH)):
     os.mkdir(ClockIn_LOG_PATH)
-
-
-## 管理员设置
-admin = {
-    "pushGroup" :{
-        "pushToken": "",    # Push Plus Token
-        "pushTopic": ""                                 # Push Plus群组编码
-    },
-    "mask":[]                                               # 屏蔽某些脚本的通知功能，如:['HeyTap','dailyCash']
-}
-
-## 账号管理
-accounts = [
-    {
-        'user':'',
-        'CK':'',
-        'UA':''
-    },
-]
+if (Battle_LOG_PATH != "") and (not os.path.exists(Battle_LOG_PATH)):
+    os.mkdir(Battle_LOG_PATH)
