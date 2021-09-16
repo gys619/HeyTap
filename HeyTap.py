@@ -469,8 +469,8 @@ class HeyTap:
         self.clockIn()              # 签到打卡
         self.runViewTask()          # 浏览任务
         self.runShareTask()         # 分享任务
-        self.runViewPush()          # 浏览推送任务
-        # self.runEarnPoint()         # 赚积分活动(已下架)
+        # self.runViewPush()          # 浏览推送任务
+        self.runEarnPoint()         # 赚积分活动(已下架)
         # self.doubledLottery()       # 天天积分翻倍，基本上抽不中
 
     # pushPlus配信
